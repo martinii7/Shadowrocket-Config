@@ -17,7 +17,10 @@
 
 ## 约定
 
-- 节点不写进配置，来自机场订阅。`[Proxy Group]` 按节点名正则筛选：`节点选择` 只含日本/新加坡/美国，`币安` 只含日本/新加坡（币安封美国 IP）。规则里用组名，不再用 `PROXY`。
+- 配置文件分为 `[General]` / `[Proxy Group]` / `[Rule]` 三段，段内用 `# ---------- 标题 ----------` 分块。`[Rule]` 依次为：私有地址 → 去广告 → 指定节点分流 → 国内直连/国外代理。
+- 策略组、策略名一律用英文，注释用中文。
+- 节点不写进配置，来自机场订阅。`[Proxy Group]` 按节点名正则筛选：`NODE` 只含日本/新加坡/美国，`Binance` 只含日本/新加坡（币安封美国 IP）。规则里用组名。
+  - 组名不能叫 `PROXY`：它是小火箭内置策略，指首页选中的节点（LOWERTOP 官方文档说明内置策略为 `proxy`，大小写不敏感）。
   - `policy-regex-filter` 放在参数最后，正则里不能有逗号；英文代号用 `(?<![A-Za-z])US(?![A-Za-z])` 这种写法，避免误中 RUS/AUS/Russia。
   - 首页选中的节点仍用于 `dns-server` 的 `#proxy` 查询，也要选在这三个地区。
 - 币安规则（关键字 `binance` + 几个非 binance 字样的 API/CDN 后缀，取自 v2fly `geosite:binance`）必须在 `direct.txt` 之前，因为 direct.txt 含 `binancezh.*`。
